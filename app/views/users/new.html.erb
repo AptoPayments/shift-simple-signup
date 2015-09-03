@@ -1,0 +1,17 @@
+<div class="jumbotron">
+  <h1>Step 2</h1>
+  <p class="lead">Sign up for Shift Payments. For your safety, Shift needs your legal name and address to properly deliver your Shift Card.</p>
+  <%= simple_form_for(@user, html: { class: 'form-horizontal' }) do |f| %>
+    <%= f.input :email %>
+    <%= f.input :first_name %>
+    <%= f.input :last_name %>
+    <%= f.input :phone_number %>
+    <%= f.input :social_security_number %>
+    <%= f.input :date_of_birth, as: :date %>
+    <%= f.input :address %>
+    <%= f.input :city %>
+    <%= f.input :state %>
+    <%= f.input :zip_code %>
+    <%= f.button :submit, 'Send to Shift Payments', class: 'btn btn-success' %>
+  <% end %>
+</div>
