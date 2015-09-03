@@ -2,33 +2,30 @@ class User
   include ActiveModel::Model
   attr_accessor :first_name, :last_name, :email,
                 :phone_number, :date_of_birth, :ssn,
-                :address, :city, :state, :zip_code
-
+                :address, :city, :state, :zip_code,
+                :token, :refresh_token, :response
 
   def create
-    params = self.to_shift_params()
-    post(params.to_json)
+    self.response = HTTParty.post('https://api.shiftpayments.com/cardholders',
+      body: shift_params.to_json,
+      basic_auth: {
+        username: Rails.application.secrets.shift_api_publishable,
+        password: Rails.application.secrets.shift_api_secret
+      }
+    )
+    !self.response['error']
   end
 
   private
 
-    def post(body)
-      response = HTTParty.post('https://api.shiftpayments.com/cardholders',
-        body: body,
-        basic_auth: {
-          username: Rails.application.secrets.shift_api_publishable,
-          password: Rails.application.secrets.shift_api_secret
-        }
-      )
-    end
-
-    def to_shift_params
+    def shift_params
       {
         first_name: self.first_name,
         last_name: self.last_name,
         email: self.email,
         phone_number: self.phone_number,
-        access_token: session[:token],
+        access_token: self.token,
+        refresh_token: self.refresh_token,
         date_of_birth: self.date_of_birth,
         address: {
           street_one: self.address,
@@ -39,7 +36,7 @@ class User
         },
         document: {
           type: 'SSN',
-          value: self.social_security_number
+          value: self.ssn
         }
       }
     end

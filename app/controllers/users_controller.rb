@@ -22,16 +22,26 @@ class UsersController < ApplicationController
     if Dwolla::token = session[:token]
       user = Dwolla::Users.get
       name = user['Name'].split(' ')
-      @user.first_name = name.first,
-      @user.last_name = name.last,
-      @user.city = user['City'],
+      @user.first_name = name.first
+      @user.last_name = name.last
+      @user.city = user['City']
       @user.state = user['State']
     end
   rescue Dwolla::APIError
   end
 
   def create
-    @user = params[:user]
+    @user = User.new(params[:user])
+    @user.token = session[:token]
+    @user.refresh_token = session[:refresh_token]
+
+    if @user.create
+      # kyc, paid?
+    else
+      @error = @user.response['error']['message']
+      render :new
+    end
+
   end
 
 end

@@ -52,11 +52,10 @@ body {
 }
 
 /* Supporting marketing content */
-.marketing {
-  margin: 40px 0;
-}
-.marketing p + h4 {
-  margin-top: 28px;
+.submit-button {
+  text-align: center;
+  padding-top: 25px;
+  padding-bottom: 25px;
 }
 
 /* Responsive: Portrait tablets and up */
