@@ -1,10 +1,8 @@
 class UsersController < ApplicationController
 
   def index
-    redirect_uri = 'http://4ddf95d8.ngrok.com/oauth_return'
     Dwolla::scope = 'send|accountinfofull|funding|transactions'
-    @dwolla_link = Dwolla::OAuth.get_auth_url(redirect_uri)
-    #@dwolla_link = "https://uat.dwolla.com/oauth/v2/authenticate?client_id=#{URI.encode(@client_id)}&response_type=code&redirect_uri=#{URI.encode(@redirect_uri)}&scope=#{@scope}&verified_account=true"
+    @dwolla_link = Dwolla::OAuth.get_auth_url(url_for(:oauth_return))
   end
 
   def oauth_return
@@ -13,33 +11,27 @@ class UsersController < ApplicationController
       return
     end
 
-    Dwolla::token = finalize_oauth(params['code'])
-    user = Dwolla::Users.get
-    name = user['Name'].split(' ')
-    @user = User.new(
-      first_name: name.first,
-      last_name: name.last,
-      city: user['City'],
-      state: user['State']
-    )
-
-    render :new
+    oauth = Dwolla::OAuth.get_token(params['code'])
+    session[:token] = oauth['access_token']
+    session[:refresh_token] = oauth['refresh_token']
+    redirect_to new_user_path
   end
 
   def new
-    @user = params[:user] || User.new
+    @user = User.new
+    if Dwolla::token = session[:token]
+      user = Dwolla::Users.get
+      name = user['Name'].split(' ')
+      @user.first_name = name.first,
+      @user.last_name = name.last,
+      @user.city = user['City'],
+      @user.state = user['State']
+    end
+  rescue Dwolla::APIError
   end
 
   def create
     @user = params[:user]
   end
-
-  private
-
-    def finalize_oauth(code)
-      oauth = Dwolla::OAuth.get_token(code)
-      session[:refresh_token] = oauth['refresh_token']
-      session[:token] = oauth['access_token']
-    end
 
 end

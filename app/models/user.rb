@@ -1,9 +1,8 @@
 class User
   include ActiveModel::Model
   attr_accessor :first_name, :last_name, :email,
-                :phone_number, :date_of_birth,
-                :address, :city, :state, :zip_code,
-                :social_security_number, :access_token
+                :phone_number, :date_of_birth, :ssn,
+                :address, :city, :state, :zip_code
 
 
   def create
