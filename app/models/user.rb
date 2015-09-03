@@ -9,8 +9,8 @@ class User
     self.response = HTTParty.post('https://api.shiftpayments.com/cardholders',
       body: shift_params.to_json,
       basic_auth: {
-        username: Rails.application.secrets.shift_api_publishable,
-        password: Rails.application.secrets.shift_api_secret
+        username: ENV['SHIFT_API_PUBLISHABLE'],
+        password: ENV['SHIFT_API_SECRET']
       }
     )
     !self.response['error']
@@ -29,6 +29,7 @@ class User
         date_of_birth: self.date_of_birth,
         address: {
           street_one: self.address,
+          street_two: '',
           locality: self.city,
           region: self.state,
           postal_code: self.zip_code,

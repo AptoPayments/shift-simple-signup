@@ -36,12 +36,11 @@ class UsersController < ApplicationController
     @user.refresh_token = session[:refresh_token]
 
     if @user.create
-      # kyc, paid?
+      render :show
     else
       @error = @user.response['error']['message']
       render :new
     end
-
   end
 
 end
