@@ -1,9 +1,8 @@
 class UsersController < ApplicationController
 
   def index
-    redirect_uri = url_for(:oauth_return)
     scope = 'send|accountinfofull|funding|transactions'
-    @dwolla_link = Dwolla::OAuth.get_auth_url(redirect_uri, scope, true)
+    @dwolla_link = Dwolla::OAuth.get_auth_url(@redirect_uri, scope, true)
   end
 
   def oauth_return
@@ -12,7 +11,7 @@ class UsersController < ApplicationController
       return
     end
 
-    oauth = Dwolla::OAuth.get_token(params['code'])
+    oauth = Dwolla::OAuth.get_token(params['code'], @redirect_uri)
     session[:token] = oauth['access_token']
     session[:refresh_token] = oauth['refresh_token']
     redirect_to new_user_path
