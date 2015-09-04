@@ -58,6 +58,10 @@ body {
   padding-bottom: 25px;
 }
 
+.btn-padded {
+  padding-top: 25px;
+}
+
 #icon-success {
   color: green;
   font-size: 100px;

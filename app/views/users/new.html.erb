@@ -108,7 +108,8 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="submit-button">
-        <%= f.submit 'Send to Shift', class: 'btn btn-lg btn-success' %>
+        <%= f.button 'Submit', class: 'btn btn-lg btn-success',
+              data: {disable_with: '<i class="fa fa-spinner fa-spin"></i> Sending to Shift...'} %>
       </div>
     </div>
   </div>

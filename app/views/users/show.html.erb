@@ -7,11 +7,13 @@
     <% if @user.response['kyc_passed'] %>
       Your new Shift card is on it's way to <%= @user.city %>.
     <% else %>
-      Your application has been submitted. Shift may reach out via email.
+      Your application has been submitted. Shift will likely reach out via email.
     <% end %>
   </p>
 
   <p>
-    <%= link_to 'Sign up another...', root_path, class: 'btn btn-default'  %>
+    <div class="btn-padded">
+      <%= link_to 'Sign up another...', root_path, class: 'btn btn-default'  %>
+    </div>
   </p>
 </div>
