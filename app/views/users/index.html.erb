@@ -2,9 +2,11 @@
   <h1>Step 1</h1>
   <p class="lead">To spend funds anywhere Visa is accepted, you must first attach a Dwolla account to enable safe fund transfers.</p>
   <p>
-    <%= link_to('Connect Dwolla',
-          @dwolla_link,
-          class: 'btn btn-lg btn-warning',
-          data: {disable_with: '<i class="fa fa-spinner fa-spin"></i> Redirecting to Dwolla.com...'}) %>
+    <div class="btn-padded">
+      <%= link_to('Connect Dwolla',
+            @dwolla_link,
+            class: 'btn btn-lg btn-warning',
+            data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Redirecting to Dwolla.com..."}) %>
+    </div
   </p>
 </div>
