@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
 
   def index
-    Dwolla::scope = 'send|accountinfofull|funding|transactions'
-    @dwolla_link = Dwolla::OAuth.get_auth_url(url_for(:oauth_return))
+    redirect_uri = url_for(:oauth_return)
+    scope = 'send|accountinfofull|funding|transactions'
+    @dwolla_link = Dwolla::OAuth.get_auth_url(redirect_uri, scope, true)
   end
 
   def oauth_return
