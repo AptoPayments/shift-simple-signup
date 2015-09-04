@@ -1,7 +1,8 @@
 <div class="jumbotron">
-  <span class="glyphicon glyphicon-thumbs-up icon-lg" aria-hidden="true"></span>
+  <i id="icon-success" class="fa fa-thumbs-up"></i>
   <h1>Done!</h1>
   <br />
+
   <p class="lead">
     <% if @user.response['kyc_passed'] %>
       Your new Shift card is on it's way to <%= @user.city %>.
