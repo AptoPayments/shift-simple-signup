@@ -8,7 +8,7 @@ class UsersController < ApplicationController
 
   def oauth_return
     if params[:error] || !params[:code]
-      render :index
+      redirect_to root_path
       return
     end
 
