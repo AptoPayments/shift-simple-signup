@@ -37,7 +37,7 @@ class User
         },
         document: {
           type: 'SSN',
-          value: self.ssn
+          value: self.ssn.delete('-')
         }
       }
     end
