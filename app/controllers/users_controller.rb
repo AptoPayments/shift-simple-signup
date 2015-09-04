@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   end
 
   def oauth_return
-    if params[:error]
+    if params[:error] || !params[:code]
       render :index
       return
     end
