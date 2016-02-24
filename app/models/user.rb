@@ -22,8 +22,8 @@ class User
     resp = HTTParty.post('https://api.shiftpayments.com/cardholders',
       body: shift_params.to_json,
       basic_auth: {
-        username: ENV["SHIFT_API_PUBLISHABLE"],
-        password: ENV["SHIFT_API_SECRET"]
+        username: ENV['SHIFT_API_PUBLISHABLE'],
+        password: ENV['SHIFT_API_SECRET']
       }
     )
 
