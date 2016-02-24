@@ -37,7 +37,7 @@ class UsersController < ApplicationController
       @user.refresh_token = session[:refresh_token]
 
       if @user.create()
-        puts "[SUCCESS]: #{session[:email]}"
+        puts "[SUCCESS]: #{@user.email}"
         session.delete(:token)
         session.delete(:refresh_token)
         render :show
