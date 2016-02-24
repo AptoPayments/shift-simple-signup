@@ -1,11 +1,11 @@
 <div class="jumbotron">
   <i id="icon-success" class="fa fa-thumbs-up"></i>
-  <h1>Done!</h1>
+  <h1>Roger that!</h1>
   <br />
 
   <p class="lead">
-    <% if @user.response['cardholder']['kyc_passed'] %>
-      Your new Shift card is on its way to <%= @user.city %>.
+    <% if @user.response['cardholder']['kyc_passed_at'] %>
+      Your new Shift Card is on its way to <%= @user.city %>.
     <% else %>
       Your application has been submitted. Shift will likely reach out via email.
     <% end %>
