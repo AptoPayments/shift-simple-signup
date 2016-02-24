@@ -27,18 +27,27 @@ class UsersController < ApplicationController
       @user.city = user['City']
       @user.state = user['State']
     end
-  rescue Dwolla::APIError
   end
 
   def create
     @user = User.new(params[:user])
-    @user.token = session[:token]
-    @user.refresh_token = session[:refresh_token]
 
-    if @user.create
-      render :show
+    if @user.valid?
+      @user.token = session[:token]
+      @user.refresh_token = session[:refresh_token]
+
+      if @user.create()
+        puts "[SUCCESS]: #{session[:email]}"
+        session.delete(:token)
+        session.delete(:refresh_token)
+        render :show
+      else
+        @error = @user.response['error']['message'] || @user.response['errors'].first['message']
+        render :new
+      end
+
     else
-      @error = @user.response['error']['message']
+      @error = @user.errors.full_messages.first
       render :new
     end
   end
